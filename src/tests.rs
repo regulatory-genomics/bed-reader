@@ -369,7 +369,7 @@ fn fill_in() {
         .unwrap();
         assert!((val[(0, 0)] - 0.167_836_271_659_337_04).abs() < 1e-8);
 
-        nd::Array2::fill(&mut val, f64::NAN);
+        val.view_mut().fill(f64::NAN);
         let result = impute_and_zero_mean_snps(
             &mut val.view_mut(),
             &Dist::Unit,
@@ -397,7 +397,7 @@ fn fill_in() {
             BedErrorPlus::BedError(BedError::CannotCreateBetaDist(_, _))
         );
 
-        nd::Array2::fill(&mut val, 3.0);
+        val.view_mut().fill(3.0);
         let result = impute_and_zero_mean_snps(
             &mut val.view_mut(),
             &Dist::Beta { a: 0.5, b: 0.5 },
@@ -407,7 +407,7 @@ fn fill_in() {
         );
         assert_error_variant!(result, BedErrorPlus::BedError(BedError::IllegalSnpMean));
 
-        nd::Array2::fill(&mut val, 1.0);
+        val.view_mut().fill(1.0);
         impute_and_zero_mean_snps(
             &mut val.view_mut(),
             &Dist::Beta { a: 0.5, b: 0.5 },

@@ -1568,15 +1568,17 @@ fn file_aat_piece<T: Float + Sync + Send + Sync + AddAssign>(
 /// Create a random file with the same metadata.
 /// ```
 /// use ndarray as nd;
-/// use bed_reader::{Bed, WriteOptions, sample_bed_file};
-/// use ndarray_rand::{rand::prelude::StdRng, rand::SeedableRng, rand_distr::Uniform, RandomExt};
-///
-/// let mut bed = Bed::new(sample_bed_file("small.bed")?)?;
-/// let metadata = bed.metadata()?;
-/// let shape = bed.dim()?;
-///
-/// let mut rng = StdRng::seed_from_u64(0);
-/// let val = nd::Array::random_using(shape, Uniform::from(-1..3), &mut rng);
+    /// use bed_reader::{Bed, WriteOptions, sample_bed_file};
+    /// use ndarray_rand::rand::prelude::StdRng;
+    /// use ndarray_rand::rand::SeedableRng;
+    /// use ndarray_rand::rand::Rng;
+    ///
+    /// let mut bed = Bed::new(sample_bed_file("small.bed")?)?;
+    /// let metadata = bed.metadata()?;
+    /// let shape = bed.dim()?;
+    ///
+    /// let mut rng = StdRng::seed_from_u64(0);
+    /// let val: nd::Array2<i8> = nd::Array2::from_shape_vec(shape, std::iter::repeat_with(|| rng.gen_range(-1i8..3i8)).take(shape.0 * shape.1).collect()).unwrap();
 ///
 /// let temp_out = temp_testdir::TempDir::default();
 /// let output_file = temp_out.join("random.bed");
@@ -5646,14 +5648,16 @@ where
     /// ```
     /// use ndarray as nd;
     /// use bed_reader::{Bed, WriteOptions, sample_bed_file};
-    /// use ndarray_rand::{rand::prelude::StdRng, rand::SeedableRng, rand_distr::Uniform, RandomExt};
+    /// use ndarray_rand::rand::prelude::StdRng;
+    /// use ndarray_rand::rand::SeedableRng;
+    /// use ndarray_rand::rand::Rng;
     ///
     /// let mut bed = Bed::new(sample_bed_file("small.bed")?)?;
     /// let metadata = bed.metadata()?;
     /// let shape = bed.dim()?;
     ///
     /// let mut rng = StdRng::seed_from_u64(0);
-    /// let val = nd::Array::random_using(shape, Uniform::from(-1..3), &mut rng);
+    /// let val: nd::Array2<i8> = nd::Array2::from_shape_vec(shape, std::iter::repeat_with(|| rng.gen_range(-1i8..3i8)).take(shape.0 * shape.1).collect()).unwrap();
     ///
     /// let temp_out = temp_testdir::TempDir::default();
     /// let output_file = temp_out.join("random.bed");
@@ -5743,14 +5747,16 @@ where
     /// ```
     /// use ndarray as nd;
     /// use bed_reader::{Bed, WriteOptions, sample_bed_file};
-    /// use ndarray_rand::{rand::prelude::StdRng, rand::SeedableRng, rand_distr::Uniform, RandomExt};
+    /// use ndarray_rand::rand::prelude::StdRng;
+    /// use ndarray_rand::rand::SeedableRng;
+    /// use ndarray_rand::rand::Rng;
     ///
     /// let mut bed = Bed::new(sample_bed_file("small.bed")?)?;
     /// let metadata = bed.metadata()?;
     /// let shape = bed.dim()?;
     ///
     /// let mut rng = StdRng::seed_from_u64(0);
-    /// let val = nd::Array::random_using(shape, Uniform::from(-1..3), &mut rng);
+    /// let val: nd::Array2<i8> = nd::Array2::from_shape_vec(shape, std::iter::repeat_with(|| rng.gen_range(-1i8..3i8)).take(shape.0 * shape.1).collect()).unwrap();
     ///
     /// let temp_out = temp_testdir::TempDir::default();
     /// let output_file = temp_out.join("random.bed");
@@ -6384,14 +6390,16 @@ impl Metadata {
     /// ```
     /// use ndarray as nd;
     /// use bed_reader::{Metadata, WriteOptions};
-    /// use ndarray_rand::{rand::prelude::StdRng, rand::SeedableRng, rand_distr::Uniform, RandomExt};
+    /// use ndarray_rand::rand::prelude::StdRng;
+    /// use ndarray_rand::rand::SeedableRng;
+    /// use ndarray_rand::rand::Rng;
     ///
     /// let metadata = Metadata::builder()
     ///     .iid(["i1", "i2", "i3"])
     ///     .sid(["s1", "s2", "s3", "s4"])
     ///     .build()?;
     /// let mut rng = StdRng::seed_from_u64(0);
-    /// let val = nd::Array::random_using((3, 4), Uniform::from(-1..3), &mut rng);
+    /// let val: nd::Array2<i8> = nd::Array2::from_shape_vec((3, 4), std::iter::repeat_with(|| rng.gen_range(-1i8..3i8)).take(12).collect()).unwrap();
 
     /// let temp_out = temp_testdir::TempDir::default();
     /// let output_file = temp_out.join("random.bed");

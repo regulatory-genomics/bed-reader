@@ -35,10 +35,10 @@ extension-module = ["pyo3/extension-module", "tokio"]
 [dependencies]
 thiserror = "1.0.66"
 num-traits = "0.2.19"
-ndarray-npy = { version = "0.9.1", default-features = false }
+ndarray-npy = { version = "0.10.0", default-features = false }
 rayon = "1.10.0"
 numpy = "0.22.1"
-ndarray = { version = "0.16.1", features = ["approx", "rayon"] }
+ndarray = { version = "0.17", features = ["approx", "rayon"] }
 statrs = "0.17.1"
 byteorder = { version = "1.5.0", default-features = false }
 dpc-pariter = "0.4.0"                                                           # //  pariter = "0.5.1"
@@ -59,6 +59,7 @@ anyhow = "1.0.92"
 rusoto_credential = "0.48.0"
 temp_testdir = "0.2.3"
 thousands = "0.2.0"
+kn0sys_ndarray_rand = "0.17.1"
 
 
 [build-dependencies]

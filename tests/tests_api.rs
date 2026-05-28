@@ -14,7 +14,8 @@ use bed_reader::SliceInfo1;
 use bed_reader::WriteOptions;
 use ndarray as nd;
 use ndarray::s;
-use ndarray_rand::{rand::prelude::StdRng, rand::SeedableRng, rand_distr::Uniform, RandomExt};
+use ndarray_rand::rand::prelude::{StdRng, Rng};
+use ndarray_rand::rand::SeedableRng;
 use std::collections::HashSet;
 use std::panic::catch_unwind;
 use temp_testdir::TempDir;
@@ -1565,7 +1566,7 @@ fn metadata_use() -> Result<(), Box<BedErrorPlus>> {
     let shape = bed.dim()?;
 
     let mut rng = StdRng::seed_from_u64(0);
-    let val = nd::Array::random_using(shape, Uniform::from(-1..3), &mut rng);
+    let val: nd::Array2<i8> = nd::Array2::from_shape_vec(shape, std::iter::repeat_with(|| rng.gen_range(-1i8..3i8)).take(shape.0 * shape.1).collect()).unwrap();
 
     let temp_out = TempDir::default();
     let output_file = temp_out.join("random.bed");
@@ -1594,7 +1595,7 @@ fn metadata_same() -> Result<(), Box<BedErrorPlus>> {
         let output_file = temp_out.join(format!("random{file_index}.bed"));
 
         let mut rng = StdRng::seed_from_u64(0);
-        let val = nd::Array::random_using((iid_count, sid_count), Uniform::from(-1..3), &mut rng);
+        let val: nd::Array2<i8> = nd::Array2::from_shape_vec((iid_count, sid_count), std::iter::repeat_with(|| rng.gen_range(-1i8..3i8)).take(iid_count * sid_count).collect()).unwrap();
         WriteOptions::builder(output_file)
             .metadata(&metadata)
             .missing_value(-1)
@@ -1882,7 +1883,7 @@ fn metadata_builder() -> Result<(), Box<BedErrorPlus>> {
         .sid(["s1", "s2", "s3", "s4"])
         .build()?;
     let mut rng = StdRng::seed_from_u64(0);
-    let val = nd::Array::random_using((3, 4), Uniform::from(-1..3), &mut rng);
+    let val: nd::Array2<i8> = nd::Array2::from_shape_vec((3, 4), std::iter::repeat_with(|| rng.gen_range(-1i8..3i8)).take(12).collect()).unwrap();
 
     let temp_out = TempDir::default();
     let output_file = temp_out.join("random.bed");
